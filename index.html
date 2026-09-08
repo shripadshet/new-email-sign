@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Critica Log - Email Signature Generator</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            margin: 0;
+            color: #1f2937;
+        }
+
+        .header p {
+            color: #6b7280;
+        }
+
+        .card {
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            margin-bottom: 25px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group.full {
+            grid-column: span 2;
+        }
+
+        label {
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 7px;
+            color: #374151;
+        }
+
+        input {
+            height: 42px;
+            padding: 0 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            font-size: 14px;
+            outline: none;
+        }
+
+        input:focus {
+            border-color: #2563eb;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 25px;
+        }
+
+        button {
+            border: none;
+            padding: 12px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .generate-btn {
+            background: #2563eb;
+            color: white;
+        }
+
+        .download-btn {
+            background: #16a34a;
+            color: white;
+        }
+
+        .copy-btn {
+            background: #111827;
+            color: white;
+        }
+
+        button:hover {
+            opacity: 0.9;
+        }
+
+        .preview-title {
+            margin-top: 0;
+            margin-bottom: 20px;
+            color: #1f2937;
+        }
+
+        #signature {
+            display: inline-block;
+            background: white;
+            padding: 20px;
+            border: 1px solid #e5e7eb;
+        }
+
+        .signature {
+            font-family: Arial, sans-serif;
+            color: #333333;
+            width: 650px;
+        }
+
+        .signature-table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        .logo-section {
+            width: 150px;
+            padding-right: 20px;
+            border-right: 2px solid #2563eb;
+            vertical-align: middle;
+        }
+
+        .logo {
+            width: 130px;
+            max-height: 80px;
+            object-fit: contain;
+        }
+
+        .details {
+            padding-left: 20px;
+            vertical-align: middle;
+        }
+
+        .name {
+            font-size: 20px;
+            font-weight: bold;
+            color: #111827;
+            margin-bottom: 3px;
+        }
+
+        .designation {
+            font-size: 14px;
+            color: #2563eb;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .company {
+            font-size: 13px;
+            font-weight: bold;
+            color: #374151;
+            margin-bottom: 8px;
+        }
+
+        .contact {
+            font-size: 12px;
+            color: #4b5563;
+            line-height: 20px;
+        }
+
+        .contact a {
+            color: #4b5563;
+            text-decoration: none;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        @media (max-width: 700px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-group.full {
+                grid-column: span 1;
+            }
+
+            .signature {
+                width: 100%;
+            }
+
+            .buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <div class="header">
+            <h1>Critica Log</h1>
+            <p>Email Signature Generator</p>
+        </div>
+
+        <!-- FORM -->
+        <div class="card">
+
+            <h2>Employee Details</h2>
+
+            <div class="form-grid">
+
+                <div class="form-group">
+                    <label>Full Name</label>
+                    <input type="text" id="name" placeholder="John Doe">
+                </div>
+
+                <div class="form-group">
+                    <label>Designation</label>
+                    <input type="text" id="designation" placeholder="Software Engineer">
+                </div>
+
+                <div class="form-group">
+                    <label>Department</label>
+                    <input type="text" id="department" placeholder="Technology">
+                </div>
+
+                <div class="form-group">
+                    <label>Mobile Number</label>
+                    <input type="text" id="phone" placeholder="+91 9876543210">
+                </div>
+
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" id="email" placeholder="john@criticalog.com">
+                </div>
+
+                <div class="form-group">
+                    <label>Website</label>
+                    <input type="text" id="website" placeholder="www.criticalog.com">
+                </div>
+
+            </div>
+
+            <div class="buttons">
+                <button class="generate-btn" onclick="generateSignature()">
+                    Generate Signature
+                </button>
+            </div>
+
+        </div>
+
+
+        <!-- PREVIEW -->
+        <div class="card">
+
+            <h2 class="preview-title">
+                Signature Preview
+            </h2>
+
+            <div id="signature">
+
+                <div class="signature">
+
+                    <table class="signature-table">
+
+                        <tr>
+
+                            <td class="logo-section">
+
+                                <!-- Replace this with your actual logo -->
+                                <img src="critica-logo.png" class="logo" alt="Critica Log">
+
+                            </td>
+
+                            <td class="details">
+
+                                <div class="name" id="previewName">
+                                    Your Name
+                                </div>
+
+                                <div class="designation" id="previewDesignation">
+                                    Your Designation
+                                </div>
+
+                                <div class="company">
+                                    Critica Log
+                                </div>
+
+                                <div class="contact" id="previewContact">
+                                    📞 +91 9876543210
+                                    <br>
+
+                                    ✉ example@criticalog.com
+                                    <br>
+
+                                    🌐 www.criticalog.com
+                                </div>
+
+                            </td>
+
+                        </tr>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+            <div class="buttons">
+
+                <button class="download-btn" onclick="downloadSignature()">
+                    Download PNG
+                </button>
+
+                <button class="copy-btn" onclick="copySignature()">
+                    Copy HTML
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <script>
+
+        function generateSignature() {
+
+            const name =
+                document.getElementById("name").value;
+
+            const designation =
+                document.getElementById("designation").value;
+
+            const department =
+                document.getElementById("department").value;
+
+            const phone =
+                document.getElementById("phone").value;
+
+            const email =
+                document.getElementById("email").value;
+
+            const website =
+                document.getElementById("website").value;
+
+
+            document.getElementById("previewName").innerText =
+                name || "Your Name";
+
+
+            document.getElementById("previewDesignation").innerText =
+                designation || "Your Designation";
+
+
+            let contactHTML = "";
+
+            if (phone) {
+                contactHTML += "📞 " + phone + "<br>";
+            }
+
+            if (email) {
+                contactHTML += "✉ " + email + "<br>";
+            }
+
+            if (website) {
+                contactHTML += "🌐 " + website;
+            }
+
+            document.getElementById("previewContact").innerHTML =
+                contactHTML;
+
+        }
+
+
+        function copySignature() {
+
+            const signature =
+                document.getElementById("signature");
+
+            const range =
+                document.createRange();
+
+            range.selectNode(signature);
+
+            const selection =
+                window.getSelection();
+
+            selection.removeAllRanges();
+
+            selection.addRange(range);
+
+            try {
+
+                document.execCommand("copy");
+
+                alert("Signature copied!");
+
+            } catch (error) {
+
+                alert("Unable to copy signature.");
+
+            }
+
+            selection.removeAllRanges();
+
+        }
+
+
+        async function downloadSignature() {
+
+            const signature =
+                document.getElementById("signature");
+
+
+            if (typeof html2canvas === "undefined") {
+
+                alert(
+                    "Please wait for the download library to load."
+                );
+
+                return;
+
+            }
+
+
+            const canvas =
+                await html2canvas(signature, {
+                    backgroundColor: "#ffffff",
+                    scale: 2
+                });
+
+
+            const link =
+                document.createElement("a");
+
+            link.download =
+                "critica-log-email-signature.png";
+
+            link.href =
+                canvas.toDataURL("image/png");
+
+            link.click();
+
+        }
+
+    </script>
+
+
+    <!-- HTML2CANVAS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js">
+    </script>
+
+</body>
+
+</html>
